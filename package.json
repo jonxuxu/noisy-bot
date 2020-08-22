@@ -5,6 +5,7 @@
   "main": "bot.js",
   "author": "Name",
   "dependencies": {
+    "@discordjs/opus": "^0.3.2",
     "discord.io": "^2.5.3",
     "discord.js": "^12.3.1",
     "winston": "^3.3.3"

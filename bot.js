@@ -14,12 +14,17 @@ bot.on("ready", () => {
   logger.info("Logged in as: ");
   logger.info(bot.username + " - (" + bot.id + ")");
 });
-bot.on("message", (message) => {
+bot.on("message", async (message) => {
   // Our bot needs to know if it will execute a command
   // It will listen for messages that will start with `!`
 
   if (!message.content) {
     return
+  }
+
+  // Joins voice channel
+  if ( message.content == "!join" && message.member.voice.channel) {
+    const connection = await message.member.voice.channel.join()
   }
 
   if (message.content.substring(0, 1) == "!") {
