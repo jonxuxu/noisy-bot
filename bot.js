@@ -19,12 +19,7 @@ bot.on("message", async (message) => {
   // It will listen for messages that will start with `!`
 
   if (!message.content) {
-    return
-  }
-
-  // Joins voice channel
-  if ( message.content == "!join" && message.member.voice.channel) {
-    const connection = await message.member.voice.channel.join()
+    return;
   }
 
   if (message.content.substring(0, 1) == "!") {
@@ -35,11 +30,27 @@ bot.on("message", async (message) => {
     switch (cmd) {
       // !ping
       case "ping":
-        message.channel.send('pong!');
+        message.channel.send("pong!");
         break;
-      // Just add any case commands if you want to..
+      // Joins voice channel
+      case "join":
+        if (message.member.voice.channel) {
+          const connection = await message.member.voice.channel.join();
+        } else {
+          message.channel.send("You must be in a voice channel!");
+        }
+        break;
+      // Leave the voice channel
+      case "leave":
+        if (message.guild.me.voiceChannel !== undefined) {
+          message.guild.me.voiceChannel.leave();
+          message.reply("I have successfully left the voice channel!");
+        } else {
+          message.reply("I'm not connected to a voice channel!");
+        }
+        break;
     }
   }
 });
 
-bot.login(auth.token)
+bot.login(auth.token);
