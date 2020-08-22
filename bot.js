@@ -46,15 +46,15 @@ bot.on("message", async (message) => {
       case "join":
         if (message.member.voice.channel) {
           const connection = await message.member.voice.channel.join();
-          songPlayer.startSong(connection, "test.ogg");
+          songPlayer.startSong(connection, "https://noisy-s3.s3.ca-central-1.amazonaws.com/out/test.ogg");
         } else {
           message.channel.send("You must be in a voice channel!");
         }
         break;
       // Leave the voice channel
       case "leave":
-        if (message.guild.me.voiceChannel !== undefined) {
-          message.guild.me.voiceChannel.leave();
+        if (message.guild.me.voice.channel) {
+          message.guild.me.voice.channel.leave();
           message.reply("I have successfully left the voice channel!");
         } else {
           message.reply("I'm not connected to a voice channel!");
