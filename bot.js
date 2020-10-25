@@ -11,7 +11,6 @@ logger.level = "debug";
 // Initialize Discord Bot
 var bot = new Discord.Client();
 bot.on("ready", () => {
-
   logger.info("Connected");
   logger.info("Logged in as: ");
   logger.info(bot.username + " - (" + bot.id + ")");
@@ -38,7 +37,10 @@ bot.on("message", async (message) => {
       case "join":
         if (message.member.voice.channel) {
           const connection = await message.member.voice.channel.join();
-          songPlayer.startSong(connection, "https://noisy-s3.s3.ca-central-1.amazonaws.com/out/test.ogg");
+          songPlayer.startSong(
+            connection,
+            "https://noisy-s3.s3.ca-central-1.amazonaws.com/out/Soulful.ogg"
+          );
         } else {
           message.channel.send("You must be in a voice channel!");
         }
