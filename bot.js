@@ -53,6 +53,7 @@ bot.on("message", async (message) => {
         break;
       // Leave the voice channel
       case "leave":
+        console.log(message.guild.me.voiceChannel);
         if (message.guild.me.voiceChannel !== undefined) {
           message.guild.me.voiceChannel.leave();
           message.reply("I have successfully left the voice channel!");
