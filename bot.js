@@ -39,15 +39,15 @@ const currPlayEmbed = (genre, requester) =>
 // Play functions
 var connection = null;
 var currGenre = "pop";
-const play = (channel, genre = []) => {
-  if (genre.length === 0) {
+const play = (channel, args = []) => {
+  if (args.length === 0) {
     channel.send(":notes: Generating and playing live `pop` music by default");
     songPlayer.startSong(
       connection,
       "https://noisy-s3.s3.ca-central-1.amazonaws.com/out/Soulful.ogg"
     );
   } else {
-    currGenre = genre[0];
+    currGenre = args[0];
     channel.send(
       `:notes: Generating and playing live \`${currGenre}\` music by default`
     );
@@ -85,11 +85,9 @@ bot.on("message", async (message) => {
         } else {
           connection = await message.member.voice.channel.join();
           message.channel.send(
-            `:thumbsup: Joined \`${message.guild.me.voice.channel.name}\``
+            `:thumbsup: Joined :sound:\`${message.guild.me.voice.channel.name}\``
           );
-          if (cmd === "join") {
-            play(message.channel);
-          } else {
+          if (cmd !== "join") {
             play(message.channel, args);
           }
         }
@@ -103,7 +101,9 @@ bot.on("message", async (message) => {
         message.guild.me.voice.channel.leave();
         message.channel.send(":leaves: Successfully Disconnected");
       } else {
-        message.reply("I'm not connected to a voice channel!");
+        message.channel.send(
+          ":x: I'm not connected to a voice channel. Type `!join` to get me in one"
+        );
       }
     }
     // Pauses the currently playing song
@@ -112,7 +112,9 @@ bot.on("message", async (message) => {
         songPlayer.pauseSong();
         message.channel.send(":pause_button: Paused");
       } else {
-        message.reply("I'm not connected to a voice channel!");
+        message.channel.send(
+          ":x: I'm not connected to a voice channel. Type `!join` to get me in one"
+        );
       }
     }
     // Resumes the currently paused song
@@ -121,7 +123,9 @@ bot.on("message", async (message) => {
         songPlayer.resumeSong();
         message.channel.send(":play_pause: Resuming");
       } else {
-        message.reply("I'm not connected to a voice channel!");
+        message.channel.send(
+          ":x: I'm not connected to a voice channel. Type `!join` to get me in one"
+        );
       }
     }
     // Now playing
@@ -130,7 +134,7 @@ bot.on("message", async (message) => {
         message.channel.send(currPlayEmbed(currGenre, "person"));
       } else {
         message.channel.send(
-          ":cry: I'm not connected to a voice channel. Type `!join` to get me in one"
+          ":x: I'm not connected to a voice channel. Type `!join` to get me in one"
         );
       }
     }
