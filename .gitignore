@@ -7,6 +7,7 @@ npm-debug.log*
 node_modules/
 
 # Auth
+auth.json
 
 # dotenv environment variables file
 .env
