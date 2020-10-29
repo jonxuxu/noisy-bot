@@ -38,19 +38,43 @@ const currPlayEmbed = (genre, requester) =>
 
 // Play functions
 var connection = null;
-var currGenre = "pop";
-const play = (channel, args = []) => {
+var currGenre = "chopin";
+const supported = [
+  "chopin",
+  "mozart",
+  "rachmaninoff",
+  "gaga",
+  "country",
+  "disney",
+  "jazz",
+  "bach",
+  "beethoven",
+  "journey",
+  "beatles",
+  "games",
+  "broadway",
+  "sinatra",
+  "bluegrass",
+  "tchaikovsky",
+];
+const play = (message, args = []) => {
   if (args.length === 0) {
-    channel.send(":notes: Generating and playing live `pop` music by default");
-    songPlayer.startSong(
-      connection,
-      "https://noisy-s3.s3.ca-central-1.amazonaws.com/out/Soulful.ogg"
+    message.channel.send(
+      ":notes: Generating and playing live `chopin` music by default"
     );
+    songPlayer.startSong(connection, currGenre);
   } else {
-    currGenre = args[0];
-    channel.send(
-      `:notes: Generating and playing live \`${currGenre}\` music by default`
-    );
+    if (supported.includes(args[0].toLocaleLowerCase())) {
+      currGenre = args[0].toLocaleLowerCase();
+      message.channel.send(
+        `:notes: Generating and playing live \`${currGenre}\` music by default`
+      );
+      songPlayer.startSong(connection, currGenre);
+    } else {
+      message.channel.send(
+        ":exclamation: Not a valid genre. You can find them [here](https://noisy.live)"
+      );
+    }
   }
 };
 
@@ -80,7 +104,7 @@ bot.on("message", async (message) => {
               `I'm already connected to :sound:\`${message.guild.me.voice.channel.name}\``
             );
           } else {
-            play(message.channel, args);
+            play(message, args);
           }
         } else {
           connection = await message.member.voice.channel.join();
@@ -88,7 +112,7 @@ bot.on("message", async (message) => {
             `:thumbsup: Joined :sound:\`${message.guild.me.voice.channel.name}\``
           );
           if (cmd !== "join") {
-            play(message.channel, args);
+            play(message, args);
           }
         }
       } else {
