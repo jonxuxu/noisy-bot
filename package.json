@@ -2,11 +2,11 @@
   "name": "noisy",
   "version": "1.0.0",
   "description": "My First Discord Bot",
-  "main": "bot.js",
+  "main": "index.js",
   "author": "Name",
   "scripts": {
-    "start": "node bot.js",
-    "dev": "nodemon bot.js",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
