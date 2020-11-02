@@ -1,36 +1,52 @@
-class songPlayer {
-  constructor() {
+const axios = require("axios");
+const { config } = require("./config");
+
+class SongPlayer {
+  constructor(songSet) {
     this.dispatcher = null;
+    this.songSetCall = songSet;
+    this.currIndex = 0;
+    console.log(config);
   }
 
-  getLink = (genre) => {
-    var url = null;
-    switch (genre) {
-      case "chopin":
-        url = "https://noisy-s3.s3.ca-central-1.amazonaws.com/out/Demo.oga";
-        break;
-    }
-    return url;
+  setCurrSong = (song) => {
+    this.songSetCall(song);
+    this.currIndex = song.index;
   };
 
-  startSong = (connection, genre) => {
-    // highWaterMark: used for
-    this.dispatcher = connection.play(this.getLink(genre), {
-      highWaterMark: 50,
+  getSong = async (genre) => {
+    try {
+      var res = await axios.get(config.webserverUrl + "/currentSong", {
+        params: { genre: genre, previous: this.currIndex },
+      });
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  startSong = async (connection, genre) => {
+    var song = await this.getSong(genre);
+    this.setCurrSong(song);
+
+    console.log("attempting to play");
+    console.log(song.url);
+
+    this.dispatcher = connection.play(song.url, {
+      highWaterMark: 50, // highWaterMark: used for
     });
 
     // TODO: improve stability and quality with opus
     this.dispatcher.on("start", () => {
-      console.log(`${this.getLink(genre)} is now playing!`);
+      console.log(`${song.name} is now playing!`);
     });
 
-    this.dispatcher.on("finish", () => {
-      console.log(`${this.getLink(genre)} has finished playing!`);
+    this.dispatcher.on("finish", async () => {
+      console.log(`${song.name} has finished playing!`);
       if (connection.channel.members.size > 1) {
-        this.dispatcher = connection.play(this.getLink(genre), {
-          highWaterMark: 50,
-        });
+        this.startSong(connection, genre);
       } else {
+        console.log("no more listeners. disconnecting...");
         connection.disconnect();
       }
     });
@@ -43,7 +59,6 @@ class songPlayer {
     if (!this.dispatcher) {
       throw "Error: no audio playing";
     }
-
     this.dispatcher.pause();
   };
 
@@ -51,9 +66,8 @@ class songPlayer {
     if (!this.dispatcher) {
       throw "Error: no audio playing";
     }
-
     this.dispatcher.resume();
   };
 }
 
-module.exports = new songPlayer();
+module.exports = SongPlayer;

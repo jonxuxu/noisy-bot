@@ -1,13 +1,16 @@
+require("dotenv").config();
+
 var Discord = require("discord.js");
 var logger = require("winston");
-var auth = require("./auth.json");
-var songPlayer = require("./songPlayer");
+var SongPlayer = require("./songPlayer");
+
 // Configure logger settings
 logger.remove(logger.transports.Console);
 logger.add(new logger.transports.Console(), {
   colorize: true,
 });
 logger.level = "debug";
+
 // Initialize Discord Bot
 var bot = new Discord.Client();
 bot.on("ready", () => {
@@ -24,36 +27,44 @@ const helpEmbed = new Discord.MessageEmbed()
   .setDescription(
     ":checkered_flag: Click [here](https://noisy.live#commands) for a list of commands \n :question: New to Noisy? [Check us out!](https://noisy.live)"
   );
-const currPlayEmbed = (genre, requester) =>
+const currPlayEmbed = (song) =>
   new Discord.MessageEmbed()
     .setColor("#ff00c1")
-    .setTitle(genre)
+    .setTitle(song.name)
     .setAuthor(
       "Now playing",
       "https://i.ibb.co/M7916b9/favicon.png",
       "https://noisy.live"
     )
-    .setDescription(`Requested by ${requester}`)
+    .setDescription(`In the theme of ${song.genre}`)
     .setThumbnail("https://i.imgur.com/wSTFkRM.png");
 
 // Play functions
 var connection = null;
 var currGenre = "chopin";
+var currSong = null;
+// Function to set the currently playing song
+setCurrSong = (song) => {
+  currSong = song;
+  currGenre = song.genre;
+};
+const songPlayer = new SongPlayer(setCurrSong);
+
 const supported = [
   "chopin",
   "mozart",
   "rachmaninoff",
-  "gaga",
+  "ladygaga",
   "country",
   "disney",
   "jazz",
   "bach",
   "beethoven",
   "journey",
-  "beatles",
-  "games",
+  "thebeatles",
+  "video",
   "broadway",
-  "sinatra",
+  "franksinatra",
   "bluegrass",
   "tchaikovsky",
 ];
@@ -62,12 +73,13 @@ const play = (message, args = []) => {
     message.channel.send(
       ":notes: Generating and playing live `chopin` music by default"
     );
+    currGenre = "chopin";
     songPlayer.startSong(connection, currGenre);
   } else {
     if (supported.includes(args[0].toLocaleLowerCase())) {
       currGenre = args[0].toLocaleLowerCase();
       message.channel.send(
-        `:notes: Generating and playing live \`${currGenre}\` music by default`
+        `:notes: Generating and playing live \`${currGenre}\` music`
       );
       songPlayer.startSong(connection, currGenre);
     } else {
@@ -78,14 +90,13 @@ const play = (message, args = []) => {
   }
 };
 
+// Process commands
 bot.on("message", async (message) => {
   // Our bot needs to know if it will execute a command
   // It will listen for messages that will start with `!`
-
   if (!message.content) {
     return;
   }
-
   if (message.content.substring(0, 1) == "!") {
     var args = message.content.substring(1).split(" ");
     var cmd = args[0];
@@ -109,7 +120,7 @@ bot.on("message", async (message) => {
         } else {
           connection = await message.member.voice.channel.join();
           message.channel.send(
-            `:thumbsup: Joined :sound:\`${message.guild.me.voice.channel.name}\``
+            `:thumbsup: Joined :sound:\`${connection.channel.name}\``
           );
           if (cmd !== "join") {
             play(message, args);
@@ -155,7 +166,7 @@ bot.on("message", async (message) => {
     // Now playing
     else if (cmd === "np") {
       if (message.guild.me.voice.channel) {
-        message.channel.send(currPlayEmbed(currGenre, "person"));
+        message.channel.send(currPlayEmbed(currSong));
       } else {
         message.channel.send(
           ":x: I'm not connected to a voice channel. Type `!join` to get me in one"
@@ -169,4 +180,4 @@ bot.on("message", async (message) => {
   }
 });
 
-bot.login(auth.token);
+bot.login(process.env.DISCORD_TOKEN);

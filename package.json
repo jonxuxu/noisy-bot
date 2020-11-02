@@ -6,8 +6,10 @@
   "author": "Name",
   "dependencies": {
     "@discordjs/opus": "^0.3.2",
+    "axios": "^0.21.0",
     "discord.io": "^2.5.3",
     "discord.js": "^12.3.1",
+    "dotenv": "^8.2.0",
     "ffmpeg-static": "^4.2.7",
     "winston": "^3.3.3"
   }

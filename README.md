@@ -1,10 +1,10 @@
-# noisy
+# noisy-bot
 
-A bot that makes music on the fly
+The code that noisy.live's Discord bot is based off of.
 
-## Getting started
+## Local setup
 
 ```
-npm install
-node bot.js
+yarn
+heroku local
 ```
