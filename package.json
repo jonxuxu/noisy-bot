@@ -4,6 +4,11 @@
   "description": "My First Discord Bot",
   "main": "bot.js",
   "author": "Name",
+  "scripts": {
+    "start": "node bot.js",
+    "dev": "nodemon bot.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
     "@discordjs/opus": "^0.3.2",
     "axios": "^0.21.0",
