@@ -59,7 +59,7 @@ getSongForGenre = async (genre, index) => {
     console.log(error);
   }
 };
-const songPlayer = new SongPlayer(getSongForGenre);
+const songPlayers = {};
 
 // Get details of a song given the song name
 getSpecificSong = async (name) => {
@@ -85,6 +85,11 @@ getGuild = async (guild) => {
   }
 };
 
+// Leave the voice channel function for the songPlayer
+leaveVoice = (connection) => {
+  delete songPlayers[connection.guild.id];
+};
+
 const supported = [
   "chopin",
   "mozart",
@@ -104,13 +109,18 @@ const supported = [
   "tchaikovsky",
 ];
 const play = async (message, args = []) => {
+  let guildId = message.guild.id;
+  if (!(guildId in songPlayers)) {
+    songPlayers[guildId] = new SongPlayer(getSongForGenre, leaveVoice);
+  }
+
   if (args.length === 0) {
     // If no argument is supplied, play chopin music by default
     message.channel.send(
       ":notes: Generating and playing live `chopin` music by default"
     );
-    var song = await getSongForGenre("chopin", 0);
-    songPlayer.startSong(connection, song);
+    let song = await getSongForGenre("chopin", 0);
+    songPlayers[guildId].startSong(connection, song);
   } else {
     // If valid genre is supplied, play that
     if (supported.includes(args[0].toLocaleLowerCase())) {
@@ -119,13 +129,13 @@ const play = async (message, args = []) => {
         `:notes: Generating and playing live \`${genre}\` music`
       );
       var song = await getSongForGenre(genre, 0);
-      songPlayer.startSong(connection, song);
+      songPlayers[guildId].startSong(connection, song);
     } else {
       var songs = await getSpecificSong(args[0]);
       if (songs.length > 0) {
         // If valid song is supplied, play that and continues with the new song's genre
         message.channel.send(`:notes: Playing ${songs[0].name}!`);
-        songPlayer.startSong(connection, songs[0]);
+        songPlayers[guildId].startSong(connection, songs[0]);
       } else {
         // Not a valid song or genre
         message.channel.send(
@@ -146,6 +156,7 @@ bot.on("message", async (message) => {
   if (message.content.substring(0, 1) == "!") {
     var args = message.content.substring(1).split(" ");
     var cmd = args[0];
+    let guildId = message.guild.id;
 
     args = args.splice(1);
     // !ping
@@ -184,6 +195,7 @@ bot.on("message", async (message) => {
       if (message.guild.me.voice.channel) {
         message.guild.me.voice.channel.leave();
         message.channel.send(":leaves: Successfully Disconnected");
+        delete songPlayers[message.guild.id];
       } else {
         message.channel.send(
           ":x: I'm not connected to a voice channel. Type `!join` to get me in one"
@@ -193,7 +205,8 @@ bot.on("message", async (message) => {
     // Pauses the currently playing song
     else if (cmd === "pause") {
       if (message.guild.me.voice.channel) {
-        songPlayer.pauseSong();
+        // TODO: Support multiple servers
+        songPlayers[guildId].pauseSong();
         message.channel.send(":pause_button: Paused");
       } else {
         message.channel.send(
@@ -204,7 +217,7 @@ bot.on("message", async (message) => {
     // Resumes the currently paused song
     else if (cmd === "resume") {
       if (message.guild.me.voice.channel) {
-        songPlayer.resumeSong();
+        songPlayers[guildId].resumeSong();
         message.channel.send(":play_pause: Resuming");
       } else {
         message.channel.send(

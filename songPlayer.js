@@ -2,9 +2,10 @@ const axios = require("axios");
 const { config } = require("./config");
 
 class SongPlayer {
-  constructor(getByGenre) {
+  constructor(getByGenre, leaveVoice) {
     this.dispatcher = null;
     this.getSongForGenre = getByGenre;
+    this.leaveVoice = leaveVoice;
     // console.log(config);
   }
 
@@ -46,8 +47,6 @@ class SongPlayer {
     if (!exists) {
       console.log("Guild does not exist. Add it");
       await this.addGuild(connection.channel.guild);
-    } else {
-      console.log("poggers");
     }
 
     this.setCurrSong(connection.channel.guild, song);
@@ -70,6 +69,7 @@ class SongPlayer {
         let newSong = await this.getSongForGenre(song.genre, song.index);
         this.startSong(connection, newSong);
       } else {
+        this.leaveVoice(connection);
         console.log("no more listeners. disconnecting...");
         connection.disconnect();
       }
