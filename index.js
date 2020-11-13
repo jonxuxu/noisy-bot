@@ -1,7 +1,9 @@
 require("dotenv").config();
+const { config } = require("./config");
 
 var Discord = require("discord.js");
 var logger = require("winston");
+const axios = require("axios");
 var SongPlayer = require("./songPlayer");
 
 // Configure logger settings
@@ -41,14 +43,47 @@ const currPlayEmbed = (song) =>
 
 // Play functions
 var connection = null;
-var currGenre = "chopin";
-var currSong = null;
+// var currSong = null;
 // Function to set the currently playing song
-setCurrSong = (song) => {
-  currSong = song;
-  currGenre = song.genre;
+// setCurrSong = (song) => {
+//   currSong = song;
+//   currGenre = song.genre;
+// };
+getSongForGenre = async (genre, index) => {
+  try {
+    var res = await axios.get(config.webserverUrl + "/currentSong", {
+      params: { genre: genre, previous: index },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
 };
-const songPlayer = new SongPlayer(setCurrSong);
+const songPlayer = new SongPlayer(getSongForGenre);
+
+// Get details of a song given the song name
+getSpecificSong = async (name) => {
+  try {
+    var res = await axios.get(config.webserverUrl + "/getSong", {
+      params: { songName: name },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Get details about the current guild
+getGuild = async (guild) => {
+  try {
+    var res = await axios.get(config.webserverUrl + "/guild", {
+      params: { id: guild.id },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const supported = [
   "chopin",
@@ -68,24 +103,35 @@ const supported = [
   "bluegrass",
   "tchaikovsky",
 ];
-const play = (message, args = []) => {
+const play = async (message, args = []) => {
   if (args.length === 0) {
+    // If no argument is supplied, play chopin music by default
     message.channel.send(
       ":notes: Generating and playing live `chopin` music by default"
     );
-    currGenre = "chopin";
-    songPlayer.startSong(connection, currGenre);
+    var song = await getSongForGenre("chopin", 0);
+    songPlayer.startSong(connection, song);
   } else {
+    // If valid genre is supplied, play that
     if (supported.includes(args[0].toLocaleLowerCase())) {
-      currGenre = args[0].toLocaleLowerCase();
+      var genre = args[0].toLocaleLowerCase();
       message.channel.send(
-        `:notes: Generating and playing live \`${currGenre}\` music`
+        `:notes: Generating and playing live \`${genre}\` music`
       );
-      songPlayer.startSong(connection, currGenre);
+      var song = await getSongForGenre(genre, 0);
+      songPlayer.startSong(connection, song);
     } else {
-      message.channel.send(
-        ":exclamation: Not a valid genre. You can find them [here](https://noisy.live)"
-      );
+      var songs = await getSpecificSong(args[0]);
+      if (songs.length > 0) {
+        // If valid song is supplied, play that and continues with the new song's genre
+        message.channel.send(`:notes: Playing ${songs[0].name}!`);
+        songPlayer.startSong(connection, songs[0]);
+      } else {
+        // Not a valid song or genre
+        message.channel.send(
+          ":exclamation: Not a valid genre or song. You can find supported genres [here](https://noisy.live)"
+        );
+      }
     }
   }
 };
@@ -105,6 +151,9 @@ bot.on("message", async (message) => {
     // !ping
     if (cmd === "ping") {
       message.channel.send("pong!");
+      console.log(message.guild.id);
+      console.log(message.guild.name);
+      console.log(message.guild.memberCount);
     }
     // Joins voice channel
     else if (cmd === "join" || cmd === "play") {
@@ -166,7 +215,16 @@ bot.on("message", async (message) => {
     // Now playing
     else if (cmd === "np") {
       if (message.guild.me.voice.channel) {
-        message.channel.send(currPlayEmbed(currSong));
+        var guild = await getGuild(message.guild);
+        var currSong = guild[0].song;
+        if (currSong == undefined) {
+          message.channel.send(
+            ":x: You haven't played any songs on this server yet"
+          );
+        } else {
+          var songs = await getSpecificSong(currSong);
+          message.channel.send(currPlayEmbed(songs[0]));
+        }
       } else {
         message.channel.send(
           ":x: I'm not connected to a voice channel. Type `!join` to get me in one"

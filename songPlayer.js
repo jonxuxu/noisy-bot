@@ -2,32 +2,55 @@ const axios = require("axios");
 const { config } = require("./config");
 
 class SongPlayer {
-  constructor(songSet) {
+  constructor(getByGenre) {
     this.dispatcher = null;
-    this.songSetCall = songSet;
-    this.currIndex = 0;
-    console.log(config);
+    this.getSongForGenre = getByGenre;
+    // console.log(config);
   }
 
-  setCurrSong = (song) => {
-    this.songSetCall(song);
-    this.currIndex = song.index;
-  };
-
-  getSong = async (genre) => {
+  checkGuildExists = async (guild) => {
     try {
-      var res = await axios.get(config.webserverUrl + "/currentSong", {
-        params: { genre: genre, previous: this.currIndex },
+      var res = await axios.get(config.webserverUrl + "/guild", {
+        params: { id: guild.id },
       });
-      return res.data;
+      return res.data.length > 0 ? true : false;
     } catch (error) {
       console.log(error);
     }
   };
 
-  startSong = async (connection, genre) => {
-    var song = await this.getSong(genre);
-    this.setCurrSong(song);
+  addGuild = async (guild) => {
+    try {
+      await axios.post(config.webserverUrl + "/guild", {
+        guild: guild,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  setCurrSong = (guild, song) => {
+    try {
+      axios.post(config.webserverUrl + "/guild", {
+        guild: guild,
+        song: song.name,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  startSong = async (connection, song) => {
+    // Checks if the guild is already in the database. If not, add it
+    let exists = await this.checkGuildExists(connection.channel.guild);
+    if (!exists) {
+      console.log("Guild does not exist. Add it");
+      await this.addGuild(connection.channel.guild);
+    } else {
+      console.log("poggers");
+    }
+
+    this.setCurrSong(connection.channel.guild, song);
 
     console.log("attempting to play");
     console.log(song.url);
@@ -44,7 +67,8 @@ class SongPlayer {
     this.dispatcher.on("finish", async () => {
       console.log(`${song.name} has finished playing!`);
       if (connection.channel.members.size > 1) {
-        this.startSong(connection, genre);
+        let newSong = await this.getSongForGenre(song.genre, song.index);
+        this.startSong(connection, newSong);
       } else {
         console.log("no more listeners. disconnecting...");
         connection.disconnect();
@@ -57,9 +81,10 @@ class SongPlayer {
 
   pauseSong = () => {
     if (!this.dispatcher) {
-      throw "Error: no audio playing";
+      console.log("there is no dispatcher!");
+    } else {
+      this.dispatcher.pause();
     }
-    this.dispatcher.pause();
   };
 
   resumeSong = () => {
