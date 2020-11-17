@@ -12,3 +12,6 @@ auth.json
 # dotenv environment variables file
 .env
 .env.test
+
+# mac stuff
+**/.DS_STORE
