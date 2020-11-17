@@ -40,7 +40,7 @@ genreToString = (genre) => {
       return "The Beatles";
     case "video":
       return "Video Game";
-    case "Broadway":
+    case "broadway":
       return "Broadway";
     case "franksinatra":
       return "Frank Sinatra";
