@@ -13,6 +13,44 @@ logger.add(new logger.transports.Console(), {
 });
 logger.level = "debug";
 
+// Genre to string function
+genreToString = (genre) => {
+  switch (genre) {
+    case "chopin":
+      return "Chopin";
+    case "mozart":
+      return "Mozart";
+    case "rachmaninoff":
+      return "Rachmaninoff";
+    case "ladygaga":
+      return "Lady Gaga";
+    case "country":
+      return "Country";
+    case "disney":
+      return "Disney";
+    case "jazz":
+      return "Jazz";
+    case "bach":
+      return "Bach";
+    case "beethoven":
+      return "beethoven";
+    case "journey":
+      return "Journey";
+    case "thebeatles":
+      return "The Beatles";
+    case "video":
+      return "Video Game";
+    case "Broadway":
+      return "Broadway";
+    case "franksinatra":
+      return "Frank Sinatra";
+    case "bluegrass":
+      return "Bluegrass";
+    case "tchaikovsky":
+      return "Tchaikovsky";
+  }
+};
+
 // Initialize Discord Bot
 var bot = new Discord.Client();
 bot.on("ready", () => {
@@ -38,17 +76,11 @@ const currPlayEmbed = (song) =>
       "https://i.ibb.co/M7916b9/favicon.png",
       "https://noisy.live"
     )
-    .setDescription(`In the theme of ${song.genre}`)
+    .setDescription(`In the theme of ${genreToString(song.genre)}`)
     .setThumbnail("https://i.imgur.com/wSTFkRM.png");
 
 // Play functions
 var connection = null;
-// var currSong = null;
-// Function to set the currently playing song
-// setCurrSong = (song) => {
-//   currSong = song;
-//   currGenre = song.genre;
-// };
 getSongForGenre = async (genre, index) => {
   try {
     var res = await axios.get(config.webserverUrl + "/currentSong", {
@@ -117,7 +149,7 @@ const play = async (message, args = []) => {
   if (args.length === 0) {
     // If no argument is supplied, play chopin music by default
     message.channel.send(
-      ":notes: Generating and playing live `chopin` music by default"
+      ":notes: Generating and playing music in the style of `Chopin` by default"
     );
     let song = await getSongForGenre("chopin", 0);
     songPlayers[guildId].startSong(connection, song);
@@ -126,7 +158,9 @@ const play = async (message, args = []) => {
     if (supported.includes(args[0].toLocaleLowerCase())) {
       var genre = args[0].toLocaleLowerCase();
       message.channel.send(
-        `:notes: Generating and playing live \`${genre}\` music`
+        `:notes: Generating and playing music in the style of \`${genreToString(
+          genre
+        )}\``
       );
       var song = await getSongForGenre(genre, 0);
       songPlayers[guildId].startSong(connection, song);
