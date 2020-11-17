@@ -1,8 +1,19 @@
 # noisy-bot
 
-The code that noisy.live's Discord bot is based off of.
+The code that noisy.live's Discord bot is based off of. Let the developers know if you'd like to view the code for the website, backend or Musenet Generator.
 
-## Local development
+![Noisy Webpage](https://i.ibb.co/mvp2BF3/pog.png)
+
+## Contributors
+
+We built this bot! Hope you like it :D
+
+[Jonathan Xu](https://github.com/JonathanXu1)
+[Ricky Mao](https://github.com/rickrm)
+[Vincent Huang](https://github.com/vincenthuang75025)
+[Aaron Abraham](https://github.com/aaronabraham311)
+
+<!-- ## Local development
 
 When running locally, make sure that the Heroku instance (production) is not running:
 
@@ -21,4 +32,4 @@ Remember to bring the Heroku worker instance back up after local development:
 
 ```
 heroku ps:scale worker=1 -a noisy-bot
-```
+``` -->

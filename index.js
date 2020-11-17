@@ -77,7 +77,9 @@ const currPlayEmbed = (song) =>
       "https://noisy.live"
     )
     .setDescription(`In the theme of ${genreToString(song.genre)}`)
-    .setThumbnail("https://i.imgur.com/wSTFkRM.png");
+    .setThumbnail(
+      `https://noisy-s3.s3.ca-central-1.amazonaws.com/assets/${song.genre}.png`
+    );
 
 // Play functions
 var connection = null;
