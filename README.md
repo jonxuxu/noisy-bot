@@ -1,6 +1,6 @@
 # noisy-bot
 
-The code that noisy.live's Discord bot is based off of. Let the developers know if you'd like to view the code for the website, backend or Musenet Generator.
+The code that noisy.live's Discord bot is based off of. Let us know if you'd like to view the code for the website, backend or Musenet Generator.
 
 ![Noisy Webpage](https://i.ibb.co/mvp2BF3/pog.png)
 
@@ -12,6 +12,10 @@ We built this bot! Hope you like it :D
 [Ricky Mao](https://github.com/rickrm)
 [Vincent Huang](https://github.com/vincenthuang75025)
 [Aaron Abraham](https://github.com/aaronabraham311)
+
+## How It Works
+
+We generate new songs of a given genre by querying Musenet with the appropriate parameters. For each genre we store a list of available songs, and when the song currently being played is near the end of that list we query Musenet for new songs to add to the list. New songs are generated with beginnings identical to the endings of the most recent song in the given genre, so that we create relatively continuous sequences of songs which eventually diverge far from their starting points. 
 
 <!-- ## Local development
 
