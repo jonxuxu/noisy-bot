@@ -28,7 +28,7 @@ class SongPlayer {
         {
           guild: guild,
         },
-        { headers: { Authorization: `Bearer ${preocess.env.JWT_TOKEN}` } }
+        { headers: { Authorization: `Bearer ${process.env.JWT_TOKEN}` } }
       );
     } catch (error) {
       console.log(error);
