@@ -37,10 +37,14 @@ class SongPlayer {
 
   setCurrSong = (guild, song) => {
     try {
-      axios.post(config.webserverUrl + "/guild", {
-        guild: guild,
-        song: song.name,
-      });
+      axios.post(
+        config.webserverUrl + "/guild",
+        {
+          guild: guild,
+          song: song.name,
+        },
+        { headers: { Authorization: `Bearer ${process.env.JWT_TOKEN}` } }
+      );
     } catch (error) {
       console.log(error);
     }
