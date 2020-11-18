@@ -119,6 +119,23 @@ getGuild = async (guild) => {
   }
 };
 
+// Sets a new prefix for the guild
+setPrefix = async (guild, prefix) => {
+  try {
+    var res = await axios.post(
+      config.webserverUrl + "/guild",
+      {
+        guild: guild,
+        prefix: prefix,
+      },
+      { headers: { Authorization: `Bearer ${process.env.JWT_TOKEN}` } }
+    );
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // Leave the voice channel function for the songPlayer
 leaveVoice = (connection) => {
   delete songPlayers[connection.guild.id];
@@ -189,8 +206,11 @@ bot.on("message", async (message) => {
   if (!message.content) {
     return;
   }
-  if (message.content.substring(0, 1) == "!") {
-    var args = message.content.substring(1).split(" ");
+  var guild = await getGuild(message.guild);
+  var prefix = guild.length > 0 ? guild[0].prefix : "!";
+
+  if (message.content.substring(0, prefix.length) == prefix) {
+    var args = message.content.substring(prefix.length).split(" ");
     var cmd = args[0];
     let guildId = message.guild.id;
 
@@ -198,9 +218,6 @@ bot.on("message", async (message) => {
     // !ping
     if (cmd === "ping") {
       message.channel.send("pong!");
-      console.log(message.guild.id);
-      console.log(message.guild.name);
-      console.log(message.guild.memberCount);
     }
     // Joins voice channel
     else if (cmd === "join" || cmd === "play") {
@@ -264,7 +281,6 @@ bot.on("message", async (message) => {
     // Now playing
     else if (cmd === "np") {
       if (message.guild.me.voice.channel) {
-        var guild = await getGuild(message.guild);
         var currSong = guild[0].song;
         if (currSong == undefined) {
           message.channel.send(
@@ -279,6 +295,20 @@ bot.on("message", async (message) => {
           ":x: I'm not connected to a voice channel. Type `!join` to get me in one"
         );
       }
+    }
+    // Update the command prefix
+    else if (cmd === "prefix") {
+      if (args.length > 1) {
+        return message.channel.send(":x: Set a prefix without spaces");
+      }
+      if (args.length == 0) {
+        return message.channel.send(":x: No prefix argument supplied");
+      }
+      var newPrefix = args[0];
+      setPrefix(message.guild, newPrefix);
+      return message.channel.send(
+        `:thumbsup: The command prefix is now set to \`${newPrefix}\``
+      );
     }
     // Displays a help message
     else if (cmd === "help") {

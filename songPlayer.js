@@ -1,5 +1,6 @@
 const axios = require("axios");
 const { config } = require("./config");
+require("dotenv").config();
 
 class SongPlayer {
   constructor(getByGenre, leaveVoice) {
@@ -22,9 +23,13 @@ class SongPlayer {
 
   addGuild = async (guild) => {
     try {
-      await axios.post(config.webserverUrl + "/guild", {
-        guild: guild,
-      });
+      await axios.post(
+        config.webserverUrl + "/guild",
+        {
+          guild: guild,
+        },
+        { headers: { Authorization: `Bearer ${preocess.env.JWT_TOKEN}` } }
+      );
     } catch (error) {
       console.log(error);
     }

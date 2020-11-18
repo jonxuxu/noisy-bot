@@ -15,7 +15,7 @@ We built this bot! Hope you like it :D
 
 ## How It Works
 
-We generate new songs of a given genre by querying Musenet with the appropriate parameters. For each genre we store a list of available songs, and when the song currently being played is near the end of that list we query Musenet for new songs to add to the list. New songs are generated with beginnings identical to the endings of the most recent song in the given genre, so that we create relatively continuous sequences of songs which eventually diverge far from their starting points. 
+We generate new songs of a given genre by querying Musenet with the appropriate parameters. For each genre we store a list of available songs, and when the song currently being played is near the end of that list we query Musenet for new songs to add to the list. New songs are generated with beginnings identical to the endings of the most recent song in the given genre, so that we create relatively continuous sequences of songs which eventually diverge far from their starting points.
 
 <!-- ## Local development
 
@@ -25,7 +25,7 @@ When running locally, make sure that the Heroku instance (production) is not run
 heroku ps:scale worker=0 -a noisy-bot
 ```
 
-Now you can run the bot locally. To do so, you need to get the `.env` file from one of the project contributors. After, you can run the bot locally and it will be live on localhost:3002
+Now you can run the bot locally. To do so, you need to get the `.env` file from one of the project contributors. After, you can run the bot locally and it will be live on localhost:3002. The env file contains the bot token for Noisy-test. The token for production Noisy is on Heroku, and it is used by builds to Github master branch.
 
 ```
 yarn
