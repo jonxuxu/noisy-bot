@@ -21,7 +21,7 @@ We built this bot! Hope you like it :D
 [Aaron Abraham](https://github.com/aaronabraham311)
 
 ## Special thanks
-Dmitri Brereton
+Dmitri Brereton  
 Chris Axon
 
 <!-- ## Local development
