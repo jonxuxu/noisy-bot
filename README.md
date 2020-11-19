@@ -1,4 +1,4 @@
-# noisy-bot
+# Noisy
 
 The code that noisy.live's Discord bot is based off of. Let us know if you'd like to view the code for the website, backend or Musenet Generator.
 
