@@ -63,7 +63,7 @@ bot.on("ready", () => {
 const helpEmbed = new Discord.MessageEmbed()
   .setColor("#ff00c1")
   .setTitle("Noisy Help")
-  .setURL("https://noisy.live")
+  .setURL("https://noisy.live#commands")
   .setDescription(
     ":checkered_flag: Click [here](https://noisy.live#commands) for a list of commands \n :question: New to Noisy? [Check us out!](https://noisy.live)"
   );
