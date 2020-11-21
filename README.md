@@ -15,7 +15,7 @@ We generate new songs of a given genre by querying Musenet with the appropriate 
 
 We built this bot! Hope you like it :D
 
-If you have any questions or concerns about the bot (security, privacy, features) that need to be addressed privately, you can directly message any one of us at the contacts listed on our profiles.
+If you have any questions or concerns about the bot (security, privacy, data, features) that need to be addressed privately, you can directly message any one of us at the contacts listed on our profiles.
 
 [Jonathan Xu](https://github.com/JonathanXu1)
 [Ricky Mao](https://github.com/rickrm)
