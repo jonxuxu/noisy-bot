@@ -254,7 +254,7 @@ bot.on("message", async (message) => {
         delete songPlayers[message.guild.id];
       } else {
         message.channel.send(
-          ":x: I'm not connected to a voice channel. Type `!join` to get me in one"
+          `:x: I'm not connected to a voice channel. Type \`${prefix}join\` to get me in one`
         );
       }
     }
@@ -266,7 +266,7 @@ bot.on("message", async (message) => {
         message.channel.send(":pause_button: Paused");
       } else {
         message.channel.send(
-          ":x: I'm not connected to a voice channel. Type `!join` to get me in one"
+          `:x: I'm not connected to a voice channel. Type \`${prefix}join\` to get me in one`
         );
       }
     }
@@ -277,7 +277,7 @@ bot.on("message", async (message) => {
         message.channel.send(":play_pause: Resuming");
       } else {
         message.channel.send(
-          ":x: I'm not connected to a voice channel. Type `!join` to get me in one"
+          `:x: I'm not connected to a voice channel. Type \`${prefix}join\` to get me in one`
         );
       }
     }
@@ -295,7 +295,7 @@ bot.on("message", async (message) => {
         }
       } else {
         message.channel.send(
-          ":x: I'm not connected to a voice channel. Type `!join` to get me in one"
+          `:x: I'm not connected to a voice channel. Type \`${prefix}join\` to get me in one`
         );
       }
     }
