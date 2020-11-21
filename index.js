@@ -57,16 +57,18 @@ bot.on("ready", () => {
   logger.info("Connected");
   logger.info("Logged in as: ");
   logger.info(bot.username + " - (" + bot.id + ")");
+  bot.user.setActivity("!help", { type: "LISTENING" });
 });
 
 // Embeds for message replies
-const helpEmbed = new Discord.MessageEmbed()
-  .setColor("#ff00c1")
-  .setTitle("Noisy Help")
-  .setURL("https://noisy.live#commands")
-  .setDescription(
-    ":checkered_flag: Click [here](https://noisy.live#commands) for a list of commands \n :question: New to Noisy? [Check us out!](https://noisy.live)"
-  );
+const helpEmbed = (prefix) =>
+  new Discord.MessageEmbed()
+    .setColor("#ff00c1")
+    .setTitle("Noisy Help")
+    .setURL("https://noisy.live#commands")
+    .setDescription(
+      `:checkered_flag: Click [here](https://noisy.live#commands) for a list of commands \n The server command prefix is \`${prefix}\` \n\n :question: New to Noisy? [Check us out!](https://noisy.live)`
+    );
 const currPlayEmbed = (song) =>
   new Discord.MessageEmbed()
     .setColor("#ff00c1")
@@ -235,6 +237,7 @@ bot.on("message", async (message) => {
           message.channel.send(
             `:thumbsup: Joined :sound:\`${connection.channel.name}\``
           );
+          connection.voice.setSelfDeaf(true);
           if (cmd !== "join") {
             play(message, args);
           }
@@ -312,7 +315,15 @@ bot.on("message", async (message) => {
     }
     // Displays a help message
     else if (cmd === "help") {
-      message.channel.send(helpEmbed);
+      message.channel.send(helpEmbed(prefix));
+    }
+  }
+  // Support the !help command regardless of server prefix
+  else if (message.content.substring(0, 1) == "!") {
+    var args = message.content.substring(1).split(" ");
+    var cmd = args[0];
+    if (cmd === "help") {
+      message.channel.send(helpEmbed(prefix));
     }
   }
 });
