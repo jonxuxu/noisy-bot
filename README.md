@@ -1,6 +1,7 @@
 # Noisy
+Noisy is a Discord bot that uses OpenAI’s Musenet to generate music on the fly. Listen with friends to a diverse set of 16 genres, ranging from Mozart to Lady Gaga. Every song you hear will never appear again.
 
-The code that noisy.live's Discord bot is based off of. Let us know if you'd like to view the code for the website, backend or Musenet Generator.
+This code powers noisy.live's Discord bot. Let us know if you'd like to view the code for the website, backend or Musenet Generator.
 
 ![Noisy Webpage](https://i.ibb.co/mvp2BF3/pog.png)
 
