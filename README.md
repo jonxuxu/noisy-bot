@@ -26,6 +26,7 @@ If you have any questions or concerns about the bot (security, privacy, data, fe
 ## Special thanks
 Dmitri Brereton  
 Chris Axon
+kvacm (for the background: https://www.deviantart.com/kvacm/art/Moons-743143427)
 
 <!-- ## Local development
 
