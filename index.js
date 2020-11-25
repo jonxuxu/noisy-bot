@@ -67,7 +67,7 @@ const helpEmbed = (prefix) =>
     .setTitle("Noisy Help")
     .setURL("https://noisy.live#commands")
     .setDescription(
-      `:checkered_flag: Click [here](https://noisy.live#commands) for a list of commands \n The server command prefix is \`${prefix}\` \n\n :question: New to Noisy? [Check us out!](https://noisy.live)`
+      `:checkered_flag: [Click here](https://noisy.live#commands) for a list of commands. The server command prefix is \`${prefix}\` \n\n :question: New to Noisy? [Check us out!](https://noisy.live) \n\n :notepad_spiral: Still need help? You can [join our Discord server](https://discord.com/invite/dXtbw8CfMr)`
     );
 const currPlayEmbed = (song) =>
   new Discord.MessageEmbed()
@@ -82,6 +82,8 @@ const currPlayEmbed = (song) =>
     .setThumbnail(
       `https://noisy-s3.s3.ca-central-1.amazonaws.com/assets/${song.genre}.png`
     );
+{
+}
 
 // Play functions
 var connection = null;
@@ -194,7 +196,7 @@ const play = async (message, args = []) => {
       } else {
         // Not a valid song or genre
         message.channel.send(
-          ":exclamation: Not a valid genre or song. You can find supported genres [here](https://noisy.live)"
+          ":exclamation: Not a valid genre or song. You can find supported genres at https://noisy.live#commands"
         );
       }
     }
@@ -261,9 +263,10 @@ bot.on("message", async (message) => {
     // Pauses the currently playing song
     else if (cmd === "pause") {
       if (message.guild.me.voice.channel) {
-        // TODO: Support multiple servers
         songPlayers[guildId].pauseSong();
-        message.channel.send(":pause_button: Paused");
+        message.channel.send(
+          `:pause_button: Player paused. Type \`${prefix}resume\` to resume`
+        );
       } else {
         message.channel.send(
           `:x: I'm not connected to a voice channel. Type \`${prefix}join\` to get me in one`
@@ -274,7 +277,7 @@ bot.on("message", async (message) => {
     else if (cmd === "resume") {
       if (message.guild.me.voice.channel) {
         songPlayers[guildId].resumeSong();
-        message.channel.send(":play_pause: Resuming");
+        message.channel.send(":play_pause: Resuming player");
       } else {
         message.channel.send(
           `:x: I'm not connected to a voice channel. Type \`${prefix}join\` to get me in one`
