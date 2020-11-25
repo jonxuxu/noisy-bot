@@ -24,8 +24,9 @@ If you have any questions or concerns about the bot (security, privacy, data, fe
 [Aaron Abraham](https://github.com/aaronabraham311)
 
 ## Special thanks
-Dmitri Brereton  
-Chris Axon
+- Dmitri Brereton  
+- Chris Axon
+- kvacm (for the background: https://www.deviantart.com/kvacm/art/Moons-743143427)
 
 <!-- ## Local development
 
