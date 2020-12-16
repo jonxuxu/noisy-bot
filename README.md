@@ -1,6 +1,8 @@
 # Noisy
 
-Noisy is a Discord bot that uses OpenAI’s Musenet to generate music on the fly. Listen with friends to a diverse set of 16 genres, ranging from Mozart to Lady Gaga. The goal is to create quality music for social situations, without needing to worry about playlists, URLs, or copyright infringements. Every song is unique and will only be played once.
+[Noisy](https://noisy.live) is a Discord bot that uses OpenAI’s Musenet to generate music on the fly. Listen with friends to a diverse set of 16 genres, ranging from Mozart to Lady Gaga. The goal is to create quality music for social situations, without needing to worry about playlists, URLs, or copyright infringements. Every song is unique and will only be played once.
+
+Check it out at https://noisy.live
 
 ![Preview](assets/promotional/main.png)
 ![Description 1](assets/promotional/description1.png)
