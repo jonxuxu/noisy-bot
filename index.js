@@ -57,6 +57,8 @@ bot.on("ready", () => {
   logger.info("Connected");
   logger.info("Logged in as: ");
   logger.info(bot.username + " - (" + bot.id + ")");
+
+  // Sets bot's status
   bot.user.setActivity("!help", { type: "LISTENING" });
 });
 

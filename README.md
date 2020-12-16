@@ -1,11 +1,20 @@
 # Noisy
+
 Noisy is a Discord bot that uses OpenAI’s Musenet to generate music on the fly. Listen with friends to a diverse set of 16 genres, ranging from Mozart to Lady Gaga. The goal is to create quality music for social situations, without needing to worry about playlists, URLs, or copyright infringements. Every song is unique and will only be played once.
+
+![Preview](assets/promotional/main.png)
+![Description 1](assets/promotional/description1.png)
+![Description 2](assets/promotional/description2.png)
+![Description 3](assets/promotional/description3.png)
 
 This code powers noisy.live's Discord bot. Let us know if you'd like to view the code for the website, backend or Musenet Generator.
 
-![Noisy Webpage](https://i.ibb.co/mvp2BF3/pog.png)
+### Usage example
+
+![Usage Example](assets/promotional/preview.png)
 
 ## Feature Requests and Bug Reports
+
 If you have any suggestions, we'd love to [hear your feedback](https://github.com/JonathanXu1/noisy-bot/issues/new/choose) and improve the bot to maximise happiness! Note: we're using Github issues, so you may need to create a Github account first before being able to fill feature requests and bug reports.
 
 ## How It Works
@@ -24,7 +33,8 @@ If you have any questions or concerns about the bot (security, privacy, data, fe
 [Aaron Abraham](https://github.com/aaronabraham311)
 
 ## Special thanks
-- Dmitri Brereton  
+
+- Dmitri Brereton
 - Chris Axon
 - kvacm (for the background: https://www.deviantart.com/kvacm/art/Moons-743143427)
 
