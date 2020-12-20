@@ -48,6 +48,8 @@ genreToString = (genre) => {
       return "Bluegrass";
     case "tchaikovsky":
       return "Tchaikovsky";
+    case "christmas":
+      return "Christmas";
   }
 };
 
@@ -164,6 +166,7 @@ const supported = [
   "franksinatra",
   "bluegrass",
   "tchaikovsky",
+  "christmas",
 ];
 const play = async (message, args = []) => {
   let guildId = message.guild.id;
