@@ -40,23 +40,26 @@ If you have any questions or concerns about the bot (security, privacy, data, fe
 - Chris Axon
 - kvacm (for the background: https://www.deviantart.com/kvacm/art/Moons-743143427)
 
-<!-- ## Local development
+<!--
+----------------------------------Noisy Developer Documentation--------------------------------------
 
-When running locally, make sure that the Heroku instance (production) is not running:
+## Local development
 
-```
-heroku ps:scale worker=0 -a noisy-bot
-```
+We do local development for Noisy on a test bot. It is not the same as the production Noisy bot. On the Noisy Discord server, you can see both bots on the sidebar.
 
-Now you can run the bot locally. To do so, you need to get the `.env` file from one of the project contributors. After, you can run the bot locally and it will be live on localhost:3002. The env file contains the bot token for Noisy-test. The token for production Noisy is on Heroku, and it is used by builds to Github master branch.
+Currently, our modules expect you to have a NodeJS version of at least 12. Install it [here](https://nodejs.org/en/download/)
+
+First, you need to get the `.env` file from one of the project contributors. The env file contains the bot token for Noisy-test. After, you can run the bot locally and it will be live on localhost:3002. To run the bot locally, you only need to follow the commands below.
 
 ```
 yarn
 heroku local
 ```
 
-Remember to bring the Heroku worker instance back up after local development:
+The token for production is different, and is on Heroku as config vars, and it is used by builds to the Github master branch.
 
-```
-heroku ps:scale worker=1 -a noisy-bot
-``` -->
+## Pushing to production
+
+When you are sure the local version has your updates, and is working, you can push the code to production. To do so, simply stage and commit your changes and push to the main branch.
+
+ -->
