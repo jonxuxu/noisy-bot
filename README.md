@@ -60,6 +60,10 @@ The token for production is different, and is on Heroku as config vars, and it i
 
 ## Pushing to production
 
-When you are sure the local version has your updates, and is working, you can push the code to production. To do so, simply stage and commit your changes and push to the main branch.
+When you are sure the local version has your updates, and is working, you can push the code to production.  We have turned off automatic deploys to Heroku because minor Github pushes will cause the dyno to restart and break instances of the bot that are currently on servers. Steps to deploy to production:
+
+1. Stage and commit your changes
+2. Push to the main branch
+3. On the Heroku dashboard, manually deploy the main Github branch. If you do not have access to the Heroku dashboard, contact a developer who does.
 
  -->
