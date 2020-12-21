@@ -71,8 +71,22 @@ const helpEmbed = (prefix) =>
     .setTitle("Noisy Help")
     .setURL("https://noisy.live#commands")
     .setDescription(
-      `:checkered_flag: [Click here](https://noisy.live#commands) for a list of commands. The server command prefix is \`${prefix}\` \n\n :question: New to Noisy? [Check us out!](https://noisy.live) \n\n :notepad_spiral: Still need help? You can [join our Discord server](https://discord.com/invite/dXtbw8CfMr)`
-    );
+      `:checkered_flag: **[Click here](https://noisy.live#commands) for a detailed list of commands. The server command prefix is \`${prefix}\` \n\n :question: New to Noisy? [Check us out!](https://noisy.live) \n\n :notepad_spiral: Still need help? You can [join our Discord server](https://discord.com/invite/dXtbw8CfMr)**`
+    ).addFields(
+      { name: '\u200B', value: '\u200B' },
+      { name: '**COMMANDS:**', value: '\u200B' },
+      {name: `\`${prefix}play\``, 
+      value: `Joins your current voice channel and start playing music. If Noisy is already playing, you can change the genre with this command by doing \`${prefix}play jazz\`.\n
+        __arguments:__ \`chopin\`,  \`mozart\`, \`rachmaninoff\`, \`ladygaga\`, \`country\`, \`disney\`, \`jazz\`, \`bach\`, \`beethoven\`, \`journey\`, \`thebeatles\`, \`video\`, \`broadway\`, \`franksinatra\`, \`bluegrass\`, \`tchaikovsky\`, \`christmas\``},
+      {name: `\`${prefix}join\``, value: "Prompts the bot to join your Discord voice channel.", inline: true},
+      {name: `\`${prefix}leave\``, value: "Leaves the voice channel it is in.", inline: true},
+      {name: `\`${prefix}pause\``, value: "Pauses the music, if anything is playing.", inline: true},
+      {name: `\`${prefix}resume\``, value: "Resumes the music, if it is paused.", inline: true},
+      {name: `\`${prefix}np\``, value: "Displays information about the currently playing song.", inline: true},
+      {name: `\`${prefix}prefix\``, value: `Customizes the command prefix. For example, \`${prefix}prefix ?\` will let you call Noisy with \`?\` instead of \`${prefix}\`, (i.e. \`?play chopin\`).`,
+       inline: true},
+      {name: `\`${prefix}help\``, value: "Displays a basic help card if you're ever lost. By default, you can always call \`!help\` for the menu.", inline: true},
+    )
 const currPlayEmbed = (song) =>
   new Discord.MessageEmbed()
     .setColor("#ff00c1")
