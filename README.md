@@ -49,7 +49,10 @@ We do local development for Noisy on a test bot. It is not the same as the produ
 
 Currently, our modules expect you to have a NodeJS version of at least 12. Install it [here](https://nodejs.org/en/download/)
 
-First, you need to get the `.env` file from one of the project contributors. The env file contains the bot token for Noisy-test. After, you can run the bot locally and it will be live on localhost:3002. To run the bot locally, you only need to follow the commands below.
+First, you need to get the `.env` file from one of the project contributors. The env file contains the bot token for Noisy-test. After, you can run the bot locally and it will be live on localhost:3002. To run the bot locally, do the following:
+
+1. Open the noisy-webserver repo, and run the webserver locally as per the README in that repo.
+2. Run the following in this project folder:.
 
 ```
 yarn
