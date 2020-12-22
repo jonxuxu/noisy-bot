@@ -73,7 +73,7 @@ const helpEmbed = (prefix) =>
     .addFields(
       { name: "**Commands**", value: "\u200B" },
       {
-        name: `\`${prefix}play (optional song name or genre)\``,
+        name: `\`${prefix}play [optional song name or genre]\``,
         value: `Joins your current voice channel and start playing music. If Noisy is already playing, you can change the genre or song with this command.\n
         __supported genres:__ \`chopin\`,  \`mozart\`, \`rachmaninoff\`, \`ladygaga\`, \`country\`, \`disney\`, \`jazz\`, \`bach\`, \`beethoven\`, \`journey\`, \`thebeatles\`, \`video\`, \`broadway\`, \`franksinatra\`, \`bluegrass\`, \`tchaikovsky\`, \`christmas\``,
       },
@@ -103,8 +103,8 @@ const helpEmbed = (prefix) =>
         inline: true,
       },
       {
-        name: `\`${prefix}prefix\``,
-        value: `Customizes the command prefix. For example, \`${prefix}prefix ?\` will let you call Noisy with \`?\` instead of \`${prefix}\`, (i.e. \`?play chopin\`).`,
+        name: `\`${prefix}prefix [new prefix]\``,
+        value: `Customizes the bot's command prefix. For example, \`${prefix}prefix ?\` will let you call Noisy with \`?\` instead of \`${prefix}\`.`,
         inline: true,
       },
       {
