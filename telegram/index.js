@@ -18,6 +18,7 @@ logger.info("Bot starting");
 
 // replace the value below with the Telegram token you receive from @BotFather
 const token = process.env.TELEGRAM_TOKEN;
+console.log(token);
 const gameName = "http://t.me/N0isyBot?game=player";
 
 // Create a bot that uses 'polling' to fetch new updates

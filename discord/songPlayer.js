@@ -1,6 +1,6 @@
 const axios = require("axios");
 const { config } = require("./config");
-require("dotenv").config();
+require("dotenv").config({ path: "../.env" });
 
 class SongPlayer {
   constructor(getByGenre, leaveVoice) {
