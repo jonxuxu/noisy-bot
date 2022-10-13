@@ -1,6 +1,6 @@
 # Noisy
 
-[Noisy](https://noisy.vercel.app/) uses OpenAI’s Musenet to generate music on the fly. Listen with friends to a diverse set of 17+ genres, ranging from Mozart to Lady Gaga. The goal is to create quality music for social situations, without needing to worry about playlists, URLs, or copyright infringements. Every song is unique and will only be played once.
+[Noisy](https://noisy.vercel.app/) uses OpenAI’s [Musenet](https://openai.com/blog/musenet/) to generate music on the fly. Listen with friends to a diverse set of 17+ genres, ranging from Mozart to Lady Gaga. The goal is to create quality music for social situations, without needing to worry about playlists, URLs, or copyright infringements. Every song is unique and will only be played once.
 
 Check it out at https://noisy.vercel.app
 ![Preview](assets/promotional/main.png)
