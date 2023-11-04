@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@discordjs/opus": "^0.3.2",
+    "@discordjs/opus": "^0.8.0",
     "axios": "^0.21.0",
     "discord.io": "^2.5.3",
     "discord.js": "^12.3.1",
